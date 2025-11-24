@@ -1,0 +1,203 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 249 100% 98%;
+    --foreground: 220 15% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 15%;
+
+    --primary: 187 85% 43%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 13% 91%;
+    --secondary-foreground: 220 15% 15%;
+
+    --muted: 220 13% 91%;
+    --muted-foreground: 220 9% 46%;
+
+    --accent: 187 85% 43%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 187 85% 43%;
+
+    --radius: 0.75rem;
+
+    /* Custom portfolio colors */
+    --surface: 0 0% 100%;
+    --surface-secondary: 220 13% 96%;
+    --text-primary: 220 15% 15%;
+    --text-secondary: 220 9% 46%;
+    --accent-glow: 187 85% 43%;
+    
+    /* Animation variables */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
+    --shadow-glow: 0 0 20px rgba(6, 182, 212, 0.3);
+  }
+
+  .dark {
+    --background: 220 50% 2%;
+    --foreground: 210 40% 98%;
+
+    --card: 220 45% 6%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 220 45% 6%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 187 85% 43%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 40% 12%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 40% 12%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 187 85% 43%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 40% 15%;
+    --input: 220 40% 15%;
+    --ring: 187 85% 43%;
+
+    /* Custom portfolio colors - dark mode */
+    --surface: 220 45% 6%;
+    --surface-secondary: 220 40% 10%;
+    --text-primary: 210 40% 98%;
+    --text-secondary: 215 20% 65%;
+    --accent-glow: 187 85% 43%;
+    
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 30px rgba(6, 182, 212, 0.4);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  /* iOS-Style Water Glass Effect for Navbar */
+  .glass-navbar {
+    background: rgba(255, 255, 255, 0.72);
+    backdrop-filter: blur(40px) saturate(180%) brightness(1.1);
+    -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.1);
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.3);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  }
+
+  .dark .glass-navbar {
+    background: rgba(20, 28, 44, 0.78);
+    backdrop-filter: blur(40px) saturate(180%) brightness(1.2);
+    -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(1.2);
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  /* Glass effect for active nav items */
+  .glass-nav-item {
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    box-shadow:
+      0 2px 8px rgba(6, 182, 212, 0.1),
+      inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  }
+
+  .dark .glass-nav-item {
+    box-shadow:
+      0 2px 12px rgba(6, 182, 212, 0.15),
+      inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  }
+}
+
+@layer components {
+  .flip-card {
+    perspective: 1600px;
+  }
+
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .flip-card:focus-visible .flip-card-inner,
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-face {
+    @apply absolute inset-0 rounded-[28px] border border-border bg-card/85 backdrop-blur-xl shadow-[0_25px_60px_-30px_rgba(0,0,0,0.65)] p-6;
+    backface-visibility: hidden;
+  }
+
+  .flip-card-back {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card[data-flipped="true"] .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .hero-flip-card:hover .flip-card-inner,
+  .hero-flip-card:focus-visible .flip-card-inner {
+    transform: none;
+  }
+
+  .hero-flip-card[data-flipped="true"] .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+}
