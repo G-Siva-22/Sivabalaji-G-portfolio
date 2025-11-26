@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
 import { Button } from "./ui/button";
 
+const NAVBAR_OFFSET = 80; // height of your fixed navbar in px (tune if needed)
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -24,14 +26,17 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      const sections = navLinks.map(link => link.href.substring(1));
-      const scrollPosition = window.scrollY + 100;
+      const sections = navLinks.map((link) => link.href.substring(1));
+      const scrollPosition = window.scrollY + NAVBAR_OFFSET + 10;
 
       for (const sectionId of sections) {
         const section = document.getElementById(sectionId);
         if (section) {
           const { offsetTop, offsetHeight } = section;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + offsetHeight
+          ) {
             setActiveSection(sectionId);
             break;
           }
@@ -40,24 +45,32 @@ const Navbar = () => {
     };
 
     handleScroll();
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, []); // navLinks are static, so OK to leave deps empty
 
   const scrollToSection = (href: string) => {
     setIsMobileMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+
+    const id = href.replace("#", "");
+    const section = document.getElementById(id);
+
+    if (!section) return;
+
+    const y =
+      section.getBoundingClientRect().top + window.pageYOffset - NAVBAR_OFFSET;
+
+    window.scrollTo({
+      top: y,
+      behavior: "smooth",
+    });
   };
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "glass-navbar shadow-lg"
-          : "bg-background/30 backdrop-blur-sm"
+        isScrolled ? "glass-navbar shadow-lg" : "bg-background/30 backdrop-blur-sm"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -68,7 +81,7 @@ const Navbar = () => {
             animate={{ opacity: 1, x: 0 }}
             className="text-2xl font-bold text-primary"
           >
-            SG
+            SB
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -78,6 +91,7 @@ const Navbar = () => {
               return (
                 <motion.button
                   key={link.href}
+                  type="button"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
@@ -109,7 +123,7 @@ const Navbar = () => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              onClick={() => setIsMobileMenuOpen((prev) => !prev)}
               aria-label="Toggle mobile menu"
             >
               {isMobileMenuOpen ? (
@@ -137,6 +151,7 @@ const Navbar = () => {
                 return (
                   <button
                     key={link.href}
+                    type="button"
                     onClick={() => scrollToSection(link.href)}
                     className={`block w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${
                       isActive

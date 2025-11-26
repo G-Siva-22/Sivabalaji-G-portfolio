@@ -23,7 +23,7 @@ export const skillsData = {
     { name: "Docker", level: "Intermediate" },
     { name: "Maven", level: "Intermediate" },
     { name: "Vercel", level: "Intermediate" },
-    { name: "PythonAnywhere", level: "Intermediate" },
+    // { name: "PythonAnywhere", level: "Intermediate" },
   ],
 };
 

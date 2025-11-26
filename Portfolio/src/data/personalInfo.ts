@@ -4,7 +4,7 @@ export const personalInfo = {
   subtitle: "Final-year B.Tech IT Student",
   location: "Chennai, Tamil Nadu, India",
   email: "sivamsecit22@gmail.com",
-  phone: "+91 735875051",
+  phone: "+91 7358750516",
   linkedin: "https://linkedin.com/in/sivabalaji-g",
   github: "https://github.com/G-Siva-22",
   
